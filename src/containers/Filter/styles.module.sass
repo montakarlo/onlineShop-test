@@ -1,0 +1,54 @@
+@mixin unselectable
+  -webkit-user-select: none /* Safari */
+  -moz-user-select: none /* Firefox */
+  -ms-user-select: none /* IE10+/Edge */
+  user-select: none /* Standard */
+
+.filter
+  grid-area: 1/4/1/5
+  background-color: var(--white)
+  padding: 30px
+  height: 328px
+  width: 100%
+  @include unselectable
+  .buttons
+    height: 80px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    margin-bottom: 30px
+    &__item
+      color: var(--white)
+      &_clear
+        color: var(--black)
+
+  .manufacturer
+    font-weight: bold
+    color: var(--black)
+    font-size: 17px
+    margin-bottom: 13px
+
+  .inputs
+    display: grid
+    grid-template-columns: repeat(2, 1fr)
+    grid-row-gap: 10px
+    grid-column-gap: 25px
+    &__item
+      display: flex
+      align-items: flex-start
+      max-width: 90px
+      .input
+        margin: 0 10px 0 0
+        width: 14px
+        height: 14px
+        min-width: 14px
+        min-height: 14px
+        cursor: pointer
+        opacity: 0.7
+        &:checked ~ .label
+          color: var(--dark-sky-blue)
+      .label
+        font-size: 14px
+        color: var(--greyish-brown)
+        line-height: 1
+        cursor: pointer
