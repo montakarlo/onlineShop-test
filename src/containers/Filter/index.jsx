@@ -3,27 +3,30 @@ import styles from './styles.module.sass';
 import { filters } from '../../data/filters';
 import { Button } from '../../components/Button';
 
-export const Filter = () => {
-  const [inputs, setInputs] = useState({});
+export const Filter = ({ onFilter, fetchAllData }) => {
+  const [inputs, setInputs] = useState([]);
 
   const handleInputChange = (e) => {
-    const copiedInputs = { ...inputs }
+    const copiedInputs = [...inputs]
     const target = e.target;
-    const name = target.name;
     const value = target.value;
     if (target.checked) {
-      setInputs({ ...copiedInputs, [name]: value })
+      copiedInputs.push(value);
+      setInputs(copiedInputs);
     } else {
-      delete copiedInputs[name]
-      setInputs({ ...copiedInputs })
+      setInputs(copiedInputs.filter(item => item !== value));
     }
   }
-
   const show = () => {
-    
+    onFilter(inputs);
   }
 
-  const clear = () => document.getElementById('filterForm').reset();
+  const clearFilter = () => {
+    fetchAllData();
+    clearInputs();
+  }
+
+  const clearInputs = () => document.getElementById('filterForm').reset();
 
   return (
     <div className={styles.filter}>
@@ -31,7 +34,7 @@ export const Filter = () => {
         <Button width onClick={show}>
           <p className={`${styles.buttons__item} ${styles.buttons__item_show}`}>Показать результат</p>
         </ Button>
-        <Button width inverted onClick={clear}>
+        <Button width inverted onClick={clearFilter}>
           <p className={`${styles.buttons__item} ${styles.buttons__item_clear}`}>Очистить фильтр</p>
         </ Button>
       </div>

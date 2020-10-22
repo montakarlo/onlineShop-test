@@ -20,7 +20,21 @@ export const fetchGoods = async () => {
 
 export const addToFavourite = async (id) => {
   const response = await api
-    .get('FAVORITE_SUCCESS')
+    .get(`FAVORITE_SUCCESS?productID=${id}`)
+    .then(async (res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));
+  return response;
+};
+
+export const fetchFiltered = async (filters) => {
+  const response = await api
+    .get(`FILTER_SUCCESS?filters=${filters}`)
     .then(async (res) => ({
       error: false,
       data: res.data,

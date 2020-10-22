@@ -18,12 +18,13 @@
     justify-content: space-between
     margin-bottom: 30px
     &__item
+      height: 16px
       color: var(--white)
       &_clear
         color: var(--black)
 
   .manufacturer
-    font-weight: bold
+    font-family: ProximaNovaNormal
     color: var(--black)
     font-size: 17px
     margin-bottom: 13px
@@ -45,9 +46,11 @@
         min-height: 14px
         cursor: pointer
         opacity: 0.7
+        box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.07)
         &:checked ~ .label
           color: var(--dark-sky-blue)
       .label
+        font-family: ProximaNovaLight
         font-size: 14px
         color: var(--greyish-brown)
         line-height: 1

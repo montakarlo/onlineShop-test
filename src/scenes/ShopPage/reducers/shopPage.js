@@ -1,13 +1,15 @@
 /* eslint-disable no-fallthrough */
 import {
   FETCH_ITEMS,
-  FETCH_ITEMS_SUCCEDED,
-  ADD_TO_FAVOURITE,
-  ADD_TO_FAVOURITE_SUCCEDED
+  FETCH_ITEMS_SUCCEEDED,
+  ADD_TO_FAVOURITE_SUCCEEDED,
+  FETCH_FILTERED,
+  FETCH_FILTERED_SUCCEEDED,
 } from '../actions/actionTypes';
 
 const initialState = {
   items: [],
+  loading: false,
 }
 
 const shopPage = (state = initialState, { type, payload }) => {
@@ -15,18 +17,18 @@ const shopPage = (state = initialState, { type, payload }) => {
   switch(type) {
     case FETCH_ITEMS: {
       return {
-        items: payload
+        ...state,
+        loading: true,
       }
     }
-    case FETCH_ITEMS_SUCCEDED: {
+    case FETCH_ITEMS_SUCCEEDED: {
       return {
-        items: payload
+        ...state,
+        items: payload,
+        loading: false,
       }
     }
-    case ADD_TO_FAVOURITE: {
-      return state;
-    }
-    case ADD_TO_FAVOURITE_SUCCEDED: {
+    case ADD_TO_FAVOURITE_SUCCEEDED: {
       const items = [...state.items]
       items.forEach((item, index) => {
         if (item.id === payload.id) {
@@ -34,7 +36,21 @@ const shopPage = (state = initialState, { type, payload }) => {
         }
       })
       return {
-        items: items
+        ...state,
+        items: items,
+      }
+    }
+    case FETCH_FILTERED: {
+      return {
+       ...state,
+       loading: true,
+      }
+    }
+    case FETCH_FILTERED_SUCCEEDED: {
+      return {
+        ...state,
+        items: payload,
+        loading: false,
       }
     }
     default:
