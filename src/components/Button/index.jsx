@@ -10,4 +10,4 @@ export const Button = ({ children, onClick, width, inverted }) => (
   >
     {children}
   </button>
-)
+);

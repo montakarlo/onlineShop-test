@@ -7,24 +7,24 @@ export const Filter = ({ onFilter, fetchAllData }) => {
   const [inputs, setInputs] = useState([]);
 
   const handleInputChange = (e) => {
-    const copiedInputs = [...inputs]
-    const target = e.target;
-    const value = target.value;
+    const copiedInputs = [...inputs];
+    const { target } = e;
+    const { value } = target;
     if (target.checked) {
       copiedInputs.push(value);
       setInputs(copiedInputs);
     } else {
-      setInputs(copiedInputs.filter(item => item !== value));
+      setInputs(copiedInputs.filter((item) => item !== value));
     }
-  }
+  };
   const show = () => {
     onFilter(inputs);
-  }
+  };
 
   const clearFilter = () => {
     fetchAllData();
     clearInputs();
-  }
+  };
 
   const clearInputs = () => document.getElementById('filterForm').reset();
 
@@ -33,10 +33,10 @@ export const Filter = ({ onFilter, fetchAllData }) => {
       <div className={styles.buttons}>
         <Button width onClick={show}>
           <p className={`${styles.buttons__item} ${styles.buttons__item_show}`}>Показать результат</p>
-        </ Button>
+        </Button>
         <Button width inverted onClick={clearFilter}>
           <p className={`${styles.buttons__item} ${styles.buttons__item_clear}`}>Очистить фильтр</p>
-        </ Button>
+        </Button>
       </div>
       <p className={styles.manufacturer}>Производитель</p>
       <form id="filterForm" className={styles.inputs}>
@@ -50,10 +50,12 @@ export const Filter = ({ onFilter, fetchAllData }) => {
               className={styles.input}
               onChange={handleInputChange}
             />
-            <label className={styles.label} htmlFor={item.id}>{item.name}</label>
+            <label className={styles.label} htmlFor={item.id}>
+              {item.name}
+            </label>
           </div>
         ))}
       </form>
     </div>
-  )
-}
+  );
+};
