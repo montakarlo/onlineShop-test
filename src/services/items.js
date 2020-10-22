@@ -7,7 +7,7 @@ const api = axios.create({
 export const fetchGoods = async () => {
   const response = await api
     .get('PRODUCTS_SUCCESS')
-    .then(async (res) => ({
+    .then((res) => ({
       error: false,
       data: res.data,
     }))
@@ -21,7 +21,7 @@ export const fetchGoods = async () => {
 export const addToFavourite = async (id) => {
   const response = await api
     .get(`FAVORITE_SUCCESS?productID=${id}`)
-    .then(async (res) => ({
+    .then((res) => ({
       error: false,
       data: res.data,
     }))
@@ -35,7 +35,7 @@ export const addToFavourite = async (id) => {
 export const fetchFiltered = async (filters) => {
   const response = await api
     .get(`FILTER_SUCCESS?filters=${filters}`)
-    .then(async (res) => ({
+    .then((res) => ({
       error: false,
       data: res.data,
     }))

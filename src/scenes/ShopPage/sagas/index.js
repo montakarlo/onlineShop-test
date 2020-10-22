@@ -22,7 +22,6 @@ function* getShopItems() {
     }
   } catch (error) {
     yield put({ type: FETCH_ITEMS_FAILED });
-    console.log(error);
   }
 }
 
@@ -39,7 +38,6 @@ function* markFavourite({ payload }) {
       console.log(response.data.data.message);
     }
   } catch (error) {
-    console.log(error);
   }
 }
 
@@ -58,7 +56,6 @@ function* filterItems({ payload }) {
     }
   } catch (error) {
     yield put({ type: FETCH_FILTERED_FAILED });
-    console.log(error);
   }
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.sass';
 import { addToFavourite, fetchFiltered, fetchItems } from './actions/actions';
@@ -7,32 +7,31 @@ import { ShopItem } from '../../containers/ShopItem';
 import { Filter } from '../../containers/Filter';
 
 const ShopPage = ({ items, getData, onFavouriteClick, filter, loading }) => {
-  const [goods, setItems] = useState();
   useEffect(() => {
     getData();
   }, []);
-  useEffect(() => {
-    setItems(items);
-  }, [items]);
+
+  const goods = useMemo(() => items.map(good =>
+    <ShopItem
+      key={good.id}
+      id={good.id}
+      code={good.code}
+      imgUrl={good.imgUrl}
+      availability={good.availability}
+      title={good.title}
+      features={good.params}
+      inFav={good.inFav}
+      onFavouriteClick={onFavouriteClick}
+    />
+  ),[items])
+
   return (
     <div className={styles.page}>
       <div className={styles.pageContainer}>
         {!loading ? (
-          goods ? (
+          items ? (
             <div className={styles.goods}>
-              {goods.map((good) => (
-                <ShopItem
-                  key={good.id}
-                  id={good.id}
-                  code={good.code}
-                  imgUrl={good.imgUrl}
-                  availability={good.availability}
-                  title={good.title}
-                  features={good.params}
-                  inFav={good.inFav}
-                  onFavouriteClick={onFavouriteClick}
-                />
-              ))}
+              {goods}
             </div>
           ) : (
             <div className={styles.loading}>No data</div>
