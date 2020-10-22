@@ -17,6 +17,8 @@ export const Filter = ({ onFilter, fetchAllData }) => {
       setInputs(copiedInputs.filter((item) => item !== value));
     }
   };
+  const clearInputs = () => document.getElementById('filterForm').reset();
+
   const show = () => {
     onFilter(inputs);
   };
@@ -26,7 +28,6 @@ export const Filter = ({ onFilter, fetchAllData }) => {
     clearInputs();
   };
 
-  const clearInputs = () => document.getElementById('filterForm').reset();
 
   return (
     <div className={styles.filter}>

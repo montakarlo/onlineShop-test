@@ -1,5 +1,10 @@
+/* eslint-disable no-console */
 import { all, put, call, takeEvery } from 'redux-saga/effects';
-import { fetchGoods, addToFavourite, fetchFiltered } from '../../../services/items';
+import {
+  fetchGoods,
+  addToFavourite,
+  fetchFiltered,
+} from '../../../services/items';
 import {
   FETCH_ITEMS,
   FETCH_ITEMS_SUCCEEDED,
@@ -15,13 +20,17 @@ function* getShopItems() {
   try {
     const response = yield call(fetchGoods);
     if (response.data.status === 'PRODUCTS_SUCCESS') {
-      yield put({ type: FETCH_ITEMS_SUCCEEDED, payload: response.data.data.products });
+      yield put({
+        type: FETCH_ITEMS_SUCCEEDED,
+        payload: response.data.data.products,
+      });
     } else {
       yield put({ type: FETCH_ITEMS_FAILED });
       console.log(response.data.data.message);
     }
   } catch (error) {
     yield put({ type: FETCH_ITEMS_FAILED });
+    console.error(error);
   }
 }
 
@@ -33,11 +42,15 @@ function* markFavourite({ payload }) {
   try {
     const response = yield call(addToFavourite, payload);
     if (response.data.status === 'FAVORITE_SUCCESS') {
-      yield put({ type: ADD_TO_FAVOURITE_SUCCEEDED, payload: { inFav: response.data.data.inFav, id: payload } });
+      yield put({
+        type: ADD_TO_FAVOURITE_SUCCEEDED,
+        payload: { inFav: response.data.data.inFav, id: payload },
+      });
     } else {
       console.log(response.data.data.message);
     }
   } catch (error) {
+    console.error(error);
   }
 }
 
@@ -49,13 +62,17 @@ function* filterItems({ payload }) {
   try {
     const response = yield call(fetchFiltered, payload);
     if (response.data.status === 'FILTER_SUCCESS') {
-      yield put({ type: FETCH_FILTERED_SUCCEEDED, payload: response.data.data.products });
+      yield put({
+        type: FETCH_FILTERED_SUCCEEDED,
+        payload: response.data.data.products,
+      });
     } else {
       yield put({ type: FETCH_FILTERED_FAILED });
       console.log(response.data.data.message);
     }
   } catch (error) {
     yield put({ type: FETCH_FILTERED_FAILED });
+    console.error(error);
   }
 }
 

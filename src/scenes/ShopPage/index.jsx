@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.sass';
@@ -9,30 +8,32 @@ import { Filter } from '../../containers/Filter';
 const ShopPage = ({ items, getData, onFavouriteClick, filter, loading }) => {
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
-  const goods = useMemo(() => items.map(good =>
-    <ShopItem
-      key={good.id}
-      id={good.id}
-      code={good.code}
-      imgUrl={good.imgUrl}
-      availability={good.availability}
-      title={good.title}
-      features={good.params}
-      inFav={good.inFav}
-      onFavouriteClick={onFavouriteClick}
-    />
-  ),[items])
+  const goods = useMemo(
+    () =>
+      items.map((good) => (
+        <ShopItem
+          key={good.id}
+          id={good.id}
+          code={good.code}
+          imgUrl={good.imgUrl}
+          availability={good.availability}
+          title={good.title}
+          features={good.params}
+          inFav={good.inFav}
+          onFavouriteClick={onFavouriteClick}
+        />
+      )),
+    [items, onFavouriteClick],
+  );
 
   return (
     <div className={styles.page}>
       <div className={styles.pageContainer}>
         {!loading ? (
           items ? (
-            <div className={styles.goods}>
-              {goods}
-            </div>
+            <div className={styles.goods}>{goods}</div>
           ) : (
             <div className={styles.loading}>No data</div>
           )
